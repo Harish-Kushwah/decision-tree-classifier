@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Tree Visualization</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+    <script src="./script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Decision Tree Classifier</h1>
+    </header>
+
+    <main class="container">
+        <aside class="sidebar">
+            <div class="card">
+                <p class="card-toggle">Upload Dataset</p>
+                <div class="card-content">
+                    <div class="form-group">
+                        <input type="file" id="fileInput" accept=".csv,.json">
+                        <button onclick="uploadDataset()">Upload</button>
+                    </div>
+                    <p id="uploadStatus"></p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <p class="card-toggle">Select Variables</p>
+                <div class="card-content">
+                    <button onclick="fetchColumns()">Load Columns</button>
+                    <div class="form-group">
+                        <label for="featureSelect">Features (X):</label>
+                        <select id="featureSelect" multiple></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="targetSelect">Target (Y):</label>
+                        <select id="targetSelect"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <p class="card-toggle">Tree Settings</p>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label for="maxDepth">Max Depth:</label>
+                        <input type="number" id="maxDepth" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="criterion">Criterion:</label>
+                        <select id="criterion">
+                            <option value="gini">Gini</option>
+                            <option value="entropy">Entropy</option>
+                        </select>
+                    </div>
+                    <button onclick="generateTree()">Generate Tree</button>
+                </div>
+            </div>
+            <div class="card">
+                <p class="card-toggle">Logs</p>
+                <div class="card-content">
+                    <pre id="logOutput"></pre>
+                </div>
+            </div>
+        </aside>
+
+        <section class="main-content">
+            <div class="tabs">
+                <div class="tab-header">
+                    <button class="tab-button active" data-tab="tree">Decision Tree</button>
+                    <button class="tab-button" data-tab="dataset">Dataset Overview</button>
+                    <button class="tab-button" data-tab="theory">Theory</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tree">
+                        <div id="treeContainer"></div>
+                    </div>
+                    <div class="tab-pane" id="dataset">
+                        <div id="datasetInfo"></div>
+                        <button onclick="fetchDatasetOverview()">Refresh Dataset</button>
+                    </div>
+                    <div class="tab-pane" id="theory">
+                        <div class="theory-content">
+                            <section>
+                                <h3>What is a Decision Tree?</h3>
+                                <p>A decision tree is a flowchart-like representation of decisions and their possible consequences, including chance event outcomes, costs, and utility. In machine learning, it's a predictive modeling tool that uses a tree-like structure to make decisions based on feature values.</p>
+                            </section>
+                            <section>
+                                <h3>Gini Index</h3>
+                                <p>The Gini Index (or Gini Impurity) measures the impurity or purity of a dataset. It's calculated as:</p>
+                                <pre>Gini = 1 - Σ(pᵢ)²</pre>
+                                <p>where pᵢ is the probability of an element belonging to class i. Lower Gini values indicate better purity (more homogeneous classes).</p>
+                            </section>
+                            <section>
+                                <h3>Entropy</h3>
+                                <p>Entropy measures the randomness or uncertainty in a dataset. It's calculated as:</p>
+                                <pre>Entropy = -Σ(pᵢ × log₂(pᵢ))</pre>
+                                <p>where pᵢ is the probability of class i. Lower entropy means less uncertainty. It's used in the Information Gain calculation to determine the best split.</p>
+                            </section>
+                            <section>
+                                <h3>Information Gain</h3>
+                                <p>Information Gain measures the reduction in entropy after a dataset is split on an attribute:</p>
+                                <pre>Information Gain = Entropy(parent) - Σ(weighted entropy of children)</pre>
+                                <p>Higher information gain indicates a better split.</p>
+                            </section>
+                            <section>
+                                <h3>Max Depth</h3>
+                                <p>Max Depth is a parameter that controls the maximum number of levels in the tree. Limiting depth prevents overfitting but might reduce model complexity.</p>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    button.classList.add('active');
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Card toggle functionality
+            const cardToggles = document.querySelectorAll('.card-toggle');
+            cardToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    content.classList.toggle('collapsed');
+                    toggle.classList.toggle('collapsed');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

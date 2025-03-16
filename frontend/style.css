@@ -1,0 +1,360 @@
+:root {
+    /* Colors */
+    --primary-color: #038961;
+    --primary-hover: rgb(1, 130, 64);
+    /* --primary-color: #220389;
+    --primary-hover: #27049d; */
+    --text-color: #333;
+    --header-text: #000;
+    --secondary-text: #2c3e50;
+    --tab-inactive: #666;
+    --background: #f5f5f5;
+    --white: #fff;
+    --light-gray: #f1f1f1;
+    --very-light-gray: #f8f9fa;
+    --border-color: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --scrollbar-thumb: grey;
+    --scrollbar-track: #f1f1f1;
+
+    /* Spacing */
+    --spacing-sm: 5px;
+    --spacing-md: 10px;
+    --spacing-lg: 1rem;
+
+    /* Sizes */
+    --header-height: 80px;
+    --font-size-base: 1rem;
+    --font-size-sm: 0.9rem;
+    --font-size-lg: 1.25rem;
+    --card-toggle-size: 18px;
+    --select-height: 100px;
+    --logs-height: 200px;
+    --tree-min-height: 400px;
+    --scrollbar-width: 10px;
+
+    /* Shadows */
+    --box-shadow: 0 2px 4px var(--shadow-color);
+    --header-shadow: 1px 1px 4px rgb(162, 160, 160);
+
+    /* Transitions */
+    --transition-fast: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--background);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--header-text);
+    text-align: flex-start;
+    box-shadow: var(--header-shadow);
+}
+
+.container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 23% 77%;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    height: calc(100vh - var(--header-height));
+}
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Main content */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    height: 110%;
+    padding: var(--spacing-sm);
+}
+
+/* Card styles */
+.card {
+    background: var(--white);
+    border-radius: 1px;
+    box-shadow: var(--box-shadow);
+}
+
+.card-toggle {
+    color: var(--secondary-text);
+    /* margin-bottom: 0.5rem; */
+    font-size: var(--card-toggle-size);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    position: relative;
+}
+
+.card-toggle::after {
+    content: '▼';
+    position: absolute;
+    right: var(--spacing-lg);
+    transition: transform var(--transition-fast);
+}
+
+.card-toggle.collapsed::after {
+    transform: rotate(-180deg);
+}
+
+.card-content {
+    padding: 0 var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
+    transition: all var(--transition-fast) ease;
+}
+
+.card-content.collapsed {
+    height: 0;
+    padding: 0 var(--spacing-lg);
+    overflow: hidden;
+}
+
+/* Form elements */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 1px;
+    font-size: var(--font-size-base);
+}
+
+select[multiple] {
+    height: var(--select-height);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    margin: var(--spacing-sm);
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Tabs */
+.tabs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-header {
+    background: var(--white);
+    border-bottom: 1px solid #eee;
+    display: flex;
+    width: 40%;
+}
+
+.tab-button {
+    padding: var(--spacing-lg);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    color: var(--tab-inactive);
+    transition: all var(--transition-fast);
+}
+
+.tab-button:hover {
+    border-bottom: 1px solid var(--primary-color);
+    background-color: var(--white);
+}
+
+.tab-button.active {
+    color: var(--secondary-text);
+    border-bottom: 2px solid var(--primary-color);
+    background: var(--very-light-gray);
+}
+
+.tab-content {
+    flex: 1;
+    background: var(--white);
+    border-radius: 0 0 8px 8px;
+    box-shadow: var(--box-shadow);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+}
+
+.tab-pane {
+    display: none;
+    height: 100%;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+#treeContainer {
+    width: 100%;
+    height: 100%;
+    min-height: var(--tree-min-height);
+}
+
+#datasetInfo {
+    margin-bottom: var(--spacing-lg);
+}
+
+.logs {
+    height: var(--logs-height);
+    padding: var(--spacing-md);
+}
+
+#logOutput {
+    background: var(--light-gray);
+    padding: var(--spacing-lg);
+    border-radius: 1px;
+    height: 100%;
+    overflow: auto;
+    font-family: 'Courier New', monospace;
+    font-size: var(--font-size-sm);
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-lg);
+}
+
+th, td {
+    padding: 0.75rem;
+    border: 1px solid #eee;
+}
+
+th {
+    background-color: var(--very-light-gray);
+    font-weight: 600;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 250px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .sidebar {
+        height: auto;
+    }
+
+    .main-content {
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-toggle {
+        padding: 0.75rem;
+    }
+
+    .card-content {
+        padding: 0 0.75rem 0.75rem 0.75rem;
+    }
+
+    .tab-button {
+        padding: 0.75rem;
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Add these styles to your existing CSS file, after the .tab-pane styles */
+
+.theory-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.theory-content h2 {
+    color: var(--secondary-text);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.theory-content section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.theory-content h3 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.theory-content p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.8;
+}
+
+.theory-content pre {
+    background: var(--light-gray);
+    padding: var(--spacing-md);
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
+    overflow-x: auto;
+}
