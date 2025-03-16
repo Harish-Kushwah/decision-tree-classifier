@@ -11,7 +11,10 @@
 </head>
 <body>
     <header>
-        <h1>Decision Tree Classifier</h1>
+        <div class="logo-container">
+            <img src="./assets/logo.svg" class="logo">
+            <h1 >Decision Tree Classifier</h1>
+        </div>
     </header>
 
     <main class="container">
@@ -81,7 +84,11 @@
                     </div>
                     <div class="tab-pane" id="dataset">
                         <div id="datasetInfo"></div>
-                        <button onclick="fetchDatasetOverview()">Refresh Dataset</button>
+
+                        <div id="dataset-btn-container">
+                            <button onclick="fetchDatasetOverview()" id="dataset-load-btn">View Dataset</button>
+                        </div>
+
                     </div>
                     <div class="tab-pane" id="theory">
                         <div class="theory-content">

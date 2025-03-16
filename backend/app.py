@@ -18,7 +18,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend
 
 # Load dataset globally
-dataset_path = "../archive/WineQT.csv"
+dataset_path = "./dataset/WineQT.csv"
 dataset = pd.read_csv(dataset_path)
 def get_status(score):
     if score == 0:

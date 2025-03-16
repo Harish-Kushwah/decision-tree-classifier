@@ -114,48 +114,52 @@ async function generateTree() {
 }
 
 async function fetchDatasetOverview() {
+
+    const datasetLoadBtn = document.getElementById("dataset-load-btn")
     try {
-      const response = await fetch(
-        "http://127.0.0.1:5000/dataset_overview"
-      );
-      const data = await response.json();
+        const response = await fetch(
+            "http://127.0.0.1:5000/dataset_overview"
+        );
+        const data = await response.json();
 
-      if (data.error) {
-        alert("Error fetching dataset overview.");
-        return;
-      }
+        if (data.error) {
+            alert("Error fetching dataset overview.");
+            return;
+        }
 
-      let tableHTML =
-        "<table border='1'><tr><th>Column</th><th>Data Type</th><th>Summary</th><th>Preview</th></tr>";
+        let tableHTML =
+            "<table border='1'><tr><th>Column</th><th>Data Type</th><th>Summary</th><th>Preview</th></tr>";
 
-      for (let i = 0; i < data.columns.length; i++) {
-        let columnName = data.columns[i];
-        let dataType = data.data_types[i];
+        for (let i = 0; i < data.columns.length; i++) {
+            let columnName = data.columns[i];
+            let dataType = data.data_types[i];
 
-        // Extracting summary details (handling cases where data might be missing)
-        let summaryDetails = data.summary[columnName]
-          ? `Count: ${data.summary[columnName].count}`
-          : "N/A";
+            // Extracting summary details (handling cases where data might be missing)
+            let summaryDetails = data.summary[columnName]
+                ? `Count: ${data.summary[columnName].count}`
+                : "N/A";
 
-        // Extracting preview (handling missing data)
-        let previewValue =
-          data.preview.length > 0 &&
-          data.preview[0][columnName] !== undefined
-            ? data.preview[0][columnName]
-            : "N/A";
+            // Extracting preview (handling missing data)
+            let previewValue =
+                data.preview.length > 0 &&
+                    data.preview[0][columnName] !== undefined
+                    ? data.preview[0][columnName]
+                    : "N/A";
 
-        tableHTML += `<tr>
+            tableHTML += `<tr>
     <td>${columnName}</td>
     <td>${dataType}</td>
     <td>${summaryDetails}</td>
     <td>${previewValue}</td>
-</tr>`;
-      }
+    </tr>`;
+        }
 
-      tableHTML += "</table>";
+        tableHTML += "</table>";
 
-      document.getElementById("datasetInfo").innerHTML = tableHTML;
+        document.getElementById("datasetInfo").innerHTML = tableHTML;
+        datasetLoadBtn.innerText = "Refresh";
+
     } catch (error) {
-      console.error("Error fetching dataset info:", error);
+        console.error("Error fetching dataset info:", error);
     }
-  }
+}
