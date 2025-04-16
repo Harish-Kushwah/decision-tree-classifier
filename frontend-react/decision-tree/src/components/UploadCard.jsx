@@ -23,22 +23,30 @@ const UploadCard = () => {
   };
 
   return (
-    <div className="bg-white shadow-md p-4">
-      <h3 className="text-lg text-gray-700 cursor-pointer">Upload Dataset</h3>
-      <div className="mt-2">
+    <div className="bg-white shadow-lg p-6 rounded-lg">
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">Upload Dataset</h3>
+      <div className="space-y-4">
         <input 
           type="file" 
           accept=".csv,.json" 
           onChange={(e) => setFile(e.target.files[0])}
-          className="w-full p-2 border border-gray-300 mb-2"
+          className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
         />
         <button 
           onClick={handleUpload}
-          className="w-full bg-green-600 text-white p-2 hover:bg-green-700 transition-colors"
+          className="w-full bg-blue-500 text-white py-2 rounded-sm hover:bg-blue-600 transition duration-300"
         >
           Upload
         </button>
-        <p className="mt-2">{status}</p>
+        {status && (
+          <p 
+            className={`mt-2 text-sm font-medium ${
+              status.includes('Failed') ? 'text-red-500' : 'text-green-500'
+            }`}
+          >
+            {status}
+          </p>
+        )}
       </div>
     </div>
   );

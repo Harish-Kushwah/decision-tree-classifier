@@ -40,7 +40,7 @@ const DatasetTab = () => {
       <div className="flex justify-end mt-4">
         <button 
           onClick={fetchDatasetOverview}
-          className="w-48 bg-green-600 text-white p-2 hover:bg-green-700"
+             className="w-48 bg-blue-500 text-white py-2 rounded-sm  hover:bg-blue-600 transition duration-300"
         >
           {datasetInfo ? 'Refresh' : 'View Dataset'}
         </button>

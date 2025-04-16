@@ -4,13 +4,21 @@ import VariablesCard from './VariablesCard';
 import SettingsCard from './SettingsCard';
 import LogsCard from './LogsCard';
 
-const Sidebar = () => {
-  const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [selectedTarget, setSelectedTarget] = useState('');
-  const [columns, setColumns] = useState([]); // Assuming columns are fetched here or passed from elsewhere
+const Sidebar = ({
+  selectedFeatures , 
+  setSelectedFeatures, 
+  selectedTarget , 
+  setSelectedTarget,
+  maxDepth,
+  setMaxDepth,
+  criterion,
+  setCriterion,
+  generateTree
+ }) => {
+  const [columns, setColumns] = useState([]);
 
   return (
-    <aside className="flex flex-col gap-4 overflow-y-auto h-full">
+    <aside className="flex flex-col gap-6 p-4 bg-gray-50  h-[calc(100vh-105px)] overflow-y-auto">
       <UploadCard />
       <VariablesCard 
         columns={columns}
@@ -18,13 +26,20 @@ const Sidebar = () => {
         setSelectedFeatures={setSelectedFeatures}
         selectedTarget={selectedTarget}
         setSelectedTarget={setSelectedTarget}
-        setColumns={setColumns} // Pass this if fetching happens in VariablesCard
+        setColumns={setColumns}
       />
       <SettingsCard 
-        selectedFeatures={selectedFeatures}
-        selectedTarget={selectedTarget}
+         selectedFeatures={selectedFeatures}
+         selectedTarget={selectedTarget}
+         setSelectedFeatures={setSelectedFeatures}
+         setSelectedTarget={setSelectedTarget}
+         maxDepth={maxDepth}
+         setMaxDepth={setMaxDepth}
+         criterion={criterion}
+         setCriterion={setCriterion}
+         generateTree={generateTree}
       />
-      <LogsCard />
+      {/* <LogsCard /> */}
     </aside>
   );
 };

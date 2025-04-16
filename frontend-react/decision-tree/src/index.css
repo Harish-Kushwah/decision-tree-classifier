@@ -12,3 +12,27 @@ body {
   font-family: 'Segoe UI', Arial, sans-serif;
   line-height: 1.6;
 }
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px; /* Change this value to adjust the scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track); /* Background of the scrollbar track */
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb); /* Color of the scrollbar thumb */
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: darkgrey; /* Color of the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Options: auto, thin, none */
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); /* Thumb and track colors */
+}

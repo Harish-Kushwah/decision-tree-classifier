@@ -10,6 +10,16 @@ module.exports = {
         'primary-hover': '#018240',
         'secondary-text': '#2c3e50',
         'tab-inactive': '#666',
+        navy: {
+          600: '#1e3a8a',
+          700: '#1e2a50',
+          800: '#1e1e2f',
+        },
+        coral: {
+          400: '#fb7185',
+          500: '#f43f5e',
+          600: '#e11d48',
+        },
       },
       spacing: {
         'sm': '5px',
@@ -26,6 +36,10 @@ module.exports = {
         'logs': '200px',
         'tree': '400px',
       },
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
+  
     },
   },
   plugins: [],

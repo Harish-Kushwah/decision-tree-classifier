@@ -20,13 +20,21 @@ CORS(app)  # Enable CORS for frontend
 # Load dataset globally
 dataset_path = "./dataset/WineQT.csv"
 dataset = pd.read_csv(dataset_path)
-def get_status(score):
-    if score == 0:
-        return "Good"
-    else:
-        return "Bad"
-    
+def get_status(probs):
+    """
+    Determine the status based on probabilities.
+    """
+    labels = ["Good", "Average", "Bad"]  # Example labels for multiple classes
+    status = []
+    for i, prob in enumerate(probs):
+        if prob > 0.5:  # Threshold for determining the dominant class
+            status.append(f"{labels[i%3]} ({prob:.2%})")
+    return ", ".join(status) if status else "Uncertain"
+
 def build_tree_dict(tree, feature_names, node=0):
+    """
+    Recursively build a dictionary representation of the decision tree.
+    """
     tree_ = tree.tree_
     if tree_.feature[node] != _tree.TREE_UNDEFINED:
         feature_name = feature_names[tree_.feature[node]]
@@ -41,9 +49,9 @@ def build_tree_dict(tree, feature_names, node=0):
     else:
         value = tree_.value[node][0]
         total = sum(value)
-        probs = [v/total for v in value] if total > 0 else [0] * len(value)
+        probs = [v / total for v in value] if total > 0 else [0] * len(value)
         return {
-            "name": f"Class: {np.argmax(value)}",
+            "name": f"Quality: {get_status(probs)}",
         }
         
 @app.route('/generate_tree', methods=['POST'])

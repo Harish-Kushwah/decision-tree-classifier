@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 const VariablesCard = ({ 
@@ -24,41 +24,39 @@ const VariablesCard = ({
   };
 
   return (
-    <div className="bg-white shadow-card p-4 rounded-sm">
-      <h3 className="text-lg text-secondary-text font-medium cursor-pointer mb-2">Select Variables</h3>
-      <div>
-        <button 
-          onClick={fetchColumns}
-          className="w-full bg-primary text-white p-2 rounded-sm hover:bg-primary-hover transition-colors duration-300 mb-4"
+    <div className="bg-white shadow-lg p-6 rounded-sm ">
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">Select Variables</h3>
+      <button 
+        onClick={fetchColumns}
+        className="w-full bg-blue-500 text-white py-2 rounded-sm  hover:bg-blue-600 transition duration-300 mb-6"
+      >
+        Load Columns
+      </button>
+      <div className="mb-6">
+        <label className="block font-medium text-gray-700 mb-2">Features (X):</label>
+        <select 
+          multiple 
+          value={selectedFeatures}
+          onChange={handleFeatureChange}
+          className="w-full h-32 p-2 border border-gray-300 rounded-sm  text-sm focus:ring-2 focus:ring-blue-500"
         >
-          Load Columns
-        </button>
-        <div className="mb-4">
-          <label className="block font-medium mb-1 text-gray-700">Features (X):</label>
-          <select 
-            multiple 
-            value={selectedFeatures}
-            onChange={handleFeatureChange}
-            className="w-full h-24 p-2 border border-gray-300 rounded-sm text-sm"
-          >
-            {columns.map(col => (
-              <option key={col} value={col}>{col}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Target (Y):</label>
-          <select 
-            value={selectedTarget}
-            onChange={(e) => setSelectedTarget(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-sm text-sm"
-          >
-            <option value="">Select Target</option>
-            {columns.map(col => (
-              <option key={col} value={col}>{col}</option>
-            ))}
-          </select>
-        </div>
+          {columns.map(col => (
+            <option key={col} value={col}>{col}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="block font-medium text-gray-700 mb-2">Target (Y):</label>
+        <select 
+          value={selectedTarget}
+          onChange={(e) => setSelectedTarget(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-sm  text-sm focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Select Target</option>
+          {columns.map(col => (
+            <option key={col} value={col}>{col}</option>
+          ))}
+        </select>
       </div>
     </div>
   );
